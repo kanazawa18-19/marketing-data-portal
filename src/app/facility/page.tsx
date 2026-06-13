@@ -9,7 +9,7 @@ import DocumentCard from "@/components/DocumentCard";
 import { listFilesInFolder, MIME_CONFIG, type DriveFile } from "@/lib/driveClient";
 
 function FacilityContent() {
-  const { accessToken } = useGoogleAuth();
+  const { accessToken, ready } = useGoogleAuth();
   const searchParams = useSearchParams();
   const router = useRouter();
   const id = searchParams.get("id") ?? "";
@@ -20,13 +20,14 @@ function FacilityContent() {
   const [activeFilter, setActiveFilter] = useState("all");
 
   useEffect(() => {
+    if (!ready) return;
     if (!accessToken) { router.push("/"); return; }
     if (!id) return;
     listFilesInFolder(accessToken, id)
       .then((data) => { setFiles(data); setFiltered(data); })
       .catch(console.error)
       .finally(() => setIsLoading(false));
-  }, [accessToken, id, router]);
+  }, [accessToken, ready, id]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     setFiltered(activeFilter === "all" ? files : files.filter((f) => f.mimeType === activeFilter));

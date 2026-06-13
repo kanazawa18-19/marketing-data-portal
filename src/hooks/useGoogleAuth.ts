@@ -34,6 +34,7 @@ const STORAGE_KEY_EXPIRY = "gapi_expiry";
 export function useGoogleAuth() {
   const [accessToken, setAccessToken] = useState<string | null>(null);
   const [user, setUser] = useState<GoogleUser | null>(null);
+  const [ready, setReady] = useState(false); // localStorageの読み込み完了フラグ
   const [scriptReady, setScriptReady] = useState(false);
   const tokenClientRef = useRef<{ requestAccessToken: (opts?: { prompt: string }) => void } | null>(null);
 
@@ -46,6 +47,7 @@ export function useGoogleAuth() {
       setAccessToken(token);
       if (savedUser) setUser(JSON.parse(savedUser));
     }
+    setReady(true); // 読み込み完了（token有無に関わらず）
   }, []);
 
   // Load GSI script
@@ -78,7 +80,6 @@ export function useGoogleAuth() {
         localStorage.setItem(STORAGE_KEY_EXPIRY, String(expiry));
         setAccessToken(token);
 
-        // Fetch user info
         try {
           const info = await fetch("https://www.googleapis.com/oauth2/v2/userinfo", {
             headers: { Authorization: `Bearer ${token}` },
@@ -105,5 +106,5 @@ export function useGoogleAuth() {
     localStorage.removeItem(STORAGE_KEY_EXPIRY);
   }, []);
 
-  return { accessToken, user, signIn, signOut };
+  return { accessToken, user, signIn, signOut, ready };
 }

@@ -42,7 +42,7 @@ function monthsBetween(start: string, end: string): string[] {
 }
 
 export default function TimelinePage() {
-  const { accessToken } = useGoogleAuth();
+  const { accessToken, ready } = useGoogleAuth();
   const router = useRouter();
   const [measures, setMeasures] = useState<Measure[]>([]);
   const [sales, setSales] = useState<SalesRecord[]>([]);
@@ -51,6 +51,7 @@ export default function TimelinePage() {
   const [error, setError] = useState("");
 
   useEffect(() => {
+    if (!ready) return;
     if (!accessToken) { router.push("/"); return; }
     Promise.all([fetchMeasures(accessToken), fetchSales(accessToken)])
       .then(([m, s]) => {
@@ -61,7 +62,7 @@ export default function TimelinePage() {
       })
       .catch((e) => setError(e.message))
       .finally(() => setIsLoading(false));
-  }, [accessToken, router]);
+  }, [accessToken, ready]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const facilities = useMemo(() => getFacilities(measures, sales), [measures, sales]);
 

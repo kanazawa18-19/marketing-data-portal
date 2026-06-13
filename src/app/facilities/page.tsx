@@ -8,7 +8,7 @@ import FacilityCard from "@/components/FacilityCard";
 import { listFacilityFolders, type DriveFolder } from "@/lib/driveClient";
 
 export default function FacilitiesPage() {
-  const { accessToken } = useGoogleAuth();
+  const { accessToken, ready } = useGoogleAuth();
   const router = useRouter();
   const [facilities, setFacilities] = useState<DriveFolder[]>([]);
   const [filtered, setFiltered] = useState<DriveFolder[]>([]);
@@ -16,12 +16,13 @@ export default function FacilitiesPage() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    if (!ready) return;
     if (!accessToken) { router.push("/"); return; }
     listFacilityFolders(accessToken)
       .then((data) => { setFacilities(data); setFiltered(data); })
       .catch(console.error)
       .finally(() => setIsLoading(false));
-  }, [accessToken, router]);
+  }, [accessToken, ready]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (!query.trim()) { setFiltered(facilities); return; }

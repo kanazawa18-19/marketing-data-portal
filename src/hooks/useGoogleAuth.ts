@@ -25,7 +25,7 @@ declare global {
 }
 
 const SCOPE =
-  "https://www.googleapis.com/auth/drive.readonly openid email profile";
+  "https://www.googleapis.com/auth/drive.readonly https://www.googleapis.com/auth/spreadsheets.readonly openid email profile";
 const CLIENT_ID = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!;
 const STORAGE_KEY_TOKEN = "gapi_token";
 const STORAGE_KEY_USER = "gapi_user";

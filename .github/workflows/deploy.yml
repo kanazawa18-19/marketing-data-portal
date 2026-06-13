@@ -26,7 +26,8 @@ jobs:
         env:
           NEXT_PUBLIC_GOOGLE_CLIENT_ID: ${{ secrets.NEXT_PUBLIC_GOOGLE_CLIENT_ID }}
           NEXT_PUBLIC_DRIVE_ROOT_FOLDER_ID: ${{ secrets.NEXT_PUBLIC_DRIVE_ROOT_FOLDER_ID }}
-          NEXT_PUBLIC_BASE_PATH: /marketing-portal
+          NEXT_PUBLIC_BASE_PATH: /marketing-data-portal
+          NEXT_PUBLIC_SPREADSHEET_ID: ${{ secrets.NEXT_PUBLIC_SPREADSHEET_ID }}
         run: npm run build
 
       - name: Deploy to gh-pages branch

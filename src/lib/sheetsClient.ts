@@ -6,7 +6,10 @@ async function getRange(token: string, range: string) {
     `${SHEETS_BASE}/${SPREADSHEET_ID}/values/${encodeURIComponent(range)}`,
     { headers: { Authorization: `Bearer ${token}` } }
   );
-  if (!res.ok) throw new Error(`Sheets API ${res.status}`);
+  if (!res.ok) {
+    const body = await res.json().catch(() => ({}));
+    throw new Error(`Sheets API ${res.status}: ${body?.error?.message ?? "unknown"} (ID: ${SPREADSHEET_ID}, range: ${range})`);
+  }
   const data = await res.json();
   return (data.values ?? []) as string[][];
 }

@@ -1,3 +1,4 @@
-:HL["/marketing-data-portal/_next/static/chunks/1_j2xpk8dc_3c.css","style"]
+:HL["/marketing-data-portal/_next/static/chunks/3lx0fxbaxmzi6.css","style"]
 :HL["/marketing-data-portal/_next/static/media/83afe278b6a6bb3c-s.p.2bn3s6zvc0dyp.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
-0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}},"staleTime":300,"buildId":"37VvIx2ezYqHO-UjueC3t"}
+1:[["children",{"s":"__PAGE__","h":160}]]
+0:{"b":"yBKaw8F4gL5WozRWJtnUF","t":{"t":{"s":"","h":80,"c":"$Q1"}}}
